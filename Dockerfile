@@ -1,13 +1,33 @@
-FROM node:16.13-alpine
+FROM node:fermium-alpine as dev
+RUN apk --update add postgresql-client
 
-WORKDIR /app
-
+WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
 
+RUN npm install glob rimraf
+RUN npm i -g typeorm ts-node
+
 COPY . .
 
-COPY ./dist ./dist
+RUN npm run build
 
-CMD ["npm", "run", "start:dev"]
+FROM node:fermium-alpine as prod
+RUN apk --update add postgresql-client
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --production
+
+COPY . .
+
+COPY --from=dev /usr/src/app/dist ./dist
+
+CMD ["node", "dist/main"]
+

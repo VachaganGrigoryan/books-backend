@@ -13,9 +13,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   awsConfig.update({
-    region: configService.get('awsRegion'),
-    accessKeyId: configService.get<string>('awsAccessKeyId'),
-    secretAccessKey: configService.get<string>('awsSecretAccessKey'),
+    region: configService.get('aws.region'),
+    accessKeyId: configService.get<string>('aws.accessKeyId'),
+    secretAccessKey: configService.get<string>('aws.secretAccessKey'),
   });
 
   const config = new DocumentBuilder()
@@ -28,7 +28,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.setGlobalPrefix('/api');
-  await app.listen(configService.get<number>('http.port'));
+  await app.listen(configService.get<number>('port'));
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

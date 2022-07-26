@@ -8,13 +8,13 @@ export class DoSpacesService {
   readonly s3: AWS.S3;
 
   constructor(private configService: ConfigService) {
-    this.awsS3Bucket = configService.get<string>('awsS3Bucket');
+    this.awsS3Bucket = configService.get<string>('aws.s3Bucket');
     this.s3 = new AWS.S3({
-      region: configService.get('awsRegion'),
-      endpoint: new AWS.Endpoint(configService.get<string>('awsEndpoint')),
+      region: configService.get('aws.region'),
+      endpoint: new AWS.Endpoint(configService.get<string>('aws.endpoint')),
       credentials: new AWS.Credentials({
-        accessKeyId: configService.get<string>('awsAccessKeyId'),
-        secretAccessKey: configService.get<string>('awsSecretAccessKey'),
+        accessKeyId: configService.get<string>('aws.accessKeyId'),
+        secretAccessKey: configService.get<string>('aws.secretAccessKey'),
       }),
     });
   }

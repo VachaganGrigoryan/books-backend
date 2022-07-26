@@ -15,7 +15,7 @@ import { SeriesModule } from './series/series.module';
 import { MediaController } from './media/media.controller';
 import { MediaModule } from './media/media.module';
 
-// console.log(configuration());
+console.log(configuration());
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { MediaModule } from './media/media.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('db.mongodb.url'),
+        uri: configService.get<string>('mongoDb.url'),
       }),
       inject: [ConfigService],
     }),

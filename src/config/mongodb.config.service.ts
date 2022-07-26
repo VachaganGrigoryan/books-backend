@@ -11,7 +11,7 @@ export class MongodbConfigService implements MongooseOptionsFactory {
 
   createMongooseOptions(): MongooseModuleOptions {
     return {
-      url: this.configService.get<string>('db.mongodb.url'),
+      url: this.configService.get<string>('mongoDb.url'),
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
